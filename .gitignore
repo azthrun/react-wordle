@@ -24,3 +24,6 @@ yarn-error.log*
 
 # test data
 /data
+
+# firebase secrets
+/src/firebase.ts
