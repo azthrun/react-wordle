@@ -71,9 +71,41 @@ h1 {
   animation: bounce 0.2s ease-in-out forwards;
 }
 
-.keypad {
+.keypad-container {
+  position: relative;
   max-width: 500px;
   margin: 20px auto;
+}
+
+.key-controls {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  margin-bottom: 10px;
+}
+
+.key-controls {
+  padding: 10px 5px;
+  width: 80px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.key-controls.enter {
+  background-color: #4c81ff;
+  color: #eee;
+  left: 0;
+}
+
+.key-controls.backspace {
+  background-color: #ff7fa5;
+  color: #fff;
+  right: 0;
+}
+
+.keypad {
+  margin: 20px auto;
+  z-index: 10;
 }
 
 .keypad > div {

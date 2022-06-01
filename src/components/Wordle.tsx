@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Wordle = ({ solution } : Props) => {
-    const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys } = useWordle(solution);
+    const { currentGuess, handleKeyup, guesses, isCorrect, turn, usedKeys, handleKeypadClick } = useWordle(solution);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
@@ -34,9 +34,8 @@ const Wordle = ({ solution } : Props) => {
 
     return (
         <>
-            <div>solution - { solution.word }</div>
             <Grid currentGuess={ currentGuess } guesses={ guesses } turn={ turn } />
-            <Keypad usedKeys={ usedKeys } />
+            <Keypad usedKeys={ usedKeys } keyClick={ handleKeypadClick } />
             {
                 showModal &&
                 <Modal isCorrect={ isCorrect } turn={ turn } solution={ solution } />

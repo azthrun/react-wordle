@@ -77,27 +77,11 @@ const useWordle = (solution : Solution) => {
 
     const handleKeyup = ({ key } : KeyboardEvent) => {
         if (key === 'Enter') {
-            if (turn > 5) {
-                alert('all guesses are used. (MAX: 5)');
-                return;
-            }
-
-            if (history.includes(currentGuess)) {
-                alert('you have tried that word');
-                return;
-            }
-
-            if (currentGuess.length !== 5) {
-                alert('word must have 5 characters');
-                return;
-            }
-
-            const formatted = formatGuess();
-            addNewGuess(formatted);
+            addGuess();
         }
 
         if (key === 'Backspace') {
-            setCurrentGuess(prev => prev.slice(0, -1));
+            backspaceGuess();
             return;
         }
 
@@ -108,7 +92,50 @@ const useWordle = (solution : Solution) => {
         }
     }
 
-    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup };
+    const handleKeypadClick = ({ target } : React.MouseEvent<HTMLDivElement>) => {
+        const divElement = target as HTMLDivElement;
+
+        if (divElement.innerHTML === 'Enter') {
+            addGuess();
+        }
+
+        if (divElement.innerHTML === 'Back') {
+            backspaceGuess();
+            return;
+        }
+
+        if (/^[a-zA-Z]$/.test(divElement.innerHTML)) {
+            if (currentGuess.length < 5) {
+                setCurrentGuess(prev => prev + divElement.innerHTML);
+            }
+        }
+    }
+
+    const addGuess = () => {
+        if (turn > 5) {
+            alert('all guesses are used. (MAX: 5)');
+            return;
+        }
+
+        if (history.includes(currentGuess)) {
+            alert('you have tried that word');
+            return;
+        }
+
+        if (currentGuess.length !== 5) {
+            alert('word must have 5 characters');
+            return;
+        }
+
+        const formatted = formatGuess();
+        addNewGuess(formatted);
+    }
+
+    const backspaceGuess = () => {
+        setCurrentGuess(prev => prev.slice(0, -1));
+    }
+
+    return { turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup, handleKeypadClick };
 }
 
 export default useWordle;
